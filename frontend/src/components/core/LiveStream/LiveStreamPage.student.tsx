@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { Loader2, LogOut, Radio, Shield, Users, Wifi } from "lucide-react";
+import {  LogOut, Radio, Shield, Users, Wifi } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
@@ -14,7 +14,7 @@ const LiveStreamStudentPage = () => {
 
   const [status, setStatus] = useState("Connecting...");
   const [isLive, setIsLive] = useState(false);
-  const [userCount, setUserCount] = useState(1);
+  const [userCount] = useState(1);
 
   const handleLeave = async () => {
     try {
@@ -25,10 +25,11 @@ const LiveStreamStudentPage = () => {
   };
 
   useEffect(() => {
-    if (!token || !appId) {
-      toast.error("Access Denied: Missing Token");
-      return navigate("/dashboard/enrolled-courses");
-    }
+  if (!token || !appId) {
+    toast.error("Access Denied: Missing Token");
+    navigate("/dashboard/enrolled-courses"); 
+    return; 
+  }
 
     const setupStudentStream = async () => {
       try {

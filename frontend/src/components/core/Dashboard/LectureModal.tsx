@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import { X, Video, Loader2 } from "lucide-react";
+import { useParams } from "react-router-dom"; 
 
 interface LectureModalProps {
   onClose: () => void;
   onSave: (data: {
     title: string;
+    courseId: string;
     desc: string;
     video: File;
   }) => Promise<void> | void;
 }
 
 const LectureModal: React.FC<LectureModalProps> = ({ onClose, onSave }) => {
+  const { courseId } = useParams<{ courseId: string }>();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [video, setVideo] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!title || !video) return;
+    
+    if (!title || !video || !courseId) return;
 
     setLoading(true);
-    await onSave({ title, desc, video });
+    await onSave({ title, courseId, desc, video }); 
     setLoading(false);
   };
 
@@ -44,7 +48,7 @@ const LectureModal: React.FC<LectureModalProps> = ({ onClose, onSave }) => {
           {/* VIDEO UPLOAD */}
           <label className="w-full h-32 bg-[#000814] rounded-xl flex flex-col items-center justify-center border border-dashed border-white/10 cursor-pointer hover:border-cyan-500/40 transition">
             <Video size={26} className="text-cyan-500 mb-1" />
-            <span className="text-[11px] text-gray-400 font-semibold">
+            <span className="text-[11px] text-gray-400 font-semibold text-center px-4 truncate w-full">
               {video ? video.name : "Click to upload lecture video"}
             </span>
             <input
@@ -84,8 +88,9 @@ const LectureModal: React.FC<LectureModalProps> = ({ onClose, onSave }) => {
           {/* SAVE BUTTON */}
           <button
             onClick={handleSubmit}
+            type="button"
             disabled={loading}
-            className="w-full bg-cyan-500 text-black font-black py-3 rounded-xl text-xs uppercase tracking-widest shadow-lg flex items-center justify-center gap-2 disabled:opacity-60"
+            className="w-full bg-cyan-500 text-black font-black py-3 rounded-xl text-xs uppercase tracking-widest shadow-lg flex items-center justify-center gap-2 disabled:opacity-60 active:scale-[0.98] transition-transform"
           >
             {loading ? (
               <>

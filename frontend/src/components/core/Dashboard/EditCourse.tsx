@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEditCourseMutation, useGetCourseDetailsQuery, useGetAllCategoriesQuery } from "../../../services/authApi";
 import { toast } from "react-hot-toast";

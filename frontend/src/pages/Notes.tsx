@@ -4,12 +4,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import HighlightText from "../components/common/HighlightText";
 import { useSelector } from "react-redux"; // Redux hook add kiya
-import { RootState } from "../redux/store"; // Store path check kar lena
+import type{ RootState } from "../redux/store"; 
 import { toast } from "react-hot-toast"; 
 // import { useNavigate } from "react-router-dom";
 import "./NotesPage.css";
 
-// Swiper styles (Ensure these are imported in App.tsx or here)
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

@@ -1,6 +1,6 @@
 
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 // User ka interface define kar rahe hain taki TypeScript error na de
 interface User {

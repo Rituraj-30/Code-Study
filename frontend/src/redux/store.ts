@@ -6,7 +6,7 @@ import { authApi } from "../services/authApi";
 export const store = configureStore({
   reducer: {
     auth: authReducer, 
-    profile: profileReducer, // 👈 Ye line add karna zaroori hai
+    profile: profileReducer, 
     [authApi.reducerPath]: authApi.reducer, 
   },
   middleware: (getDefaultMiddleware) =>

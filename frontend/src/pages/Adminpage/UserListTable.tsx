@@ -1,5 +1,3 @@
-import React from "react";
-// Naye hooks import karo
 import { 
   useGetAllStudentsAdminQuery, 
   useGetAllInstructorsAdminQuery 

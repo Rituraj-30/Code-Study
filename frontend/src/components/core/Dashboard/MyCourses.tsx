@@ -8,7 +8,7 @@ import {
 import { motion } from "framer-motion";
 import { 
   Pencil, UploadCloud, Users, Video, Plus, 
-  EyeOff, Radio, Trash2, Loader2 
+  EyeOff, Radio, Trash2 
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import ConfirmationModal from "../../common/ConfirmationModal";

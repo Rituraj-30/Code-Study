@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, CheckCircle2, ChevronLeft, ChevronRight, Loader2, Globe, FileText } from "lucide-react";
+import { Upload, CheckCircle2, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 
 interface CourseFormProps {
   initialData?: any;

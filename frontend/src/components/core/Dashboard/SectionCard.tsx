@@ -1,18 +1,25 @@
 import { useState } from "react";
-import AddLectureModal from "./AddLectureModal";
+// Sahi component import karo jo humne pehle banaya tha
+import LectureModal from "./LectureModal"; 
 
-const SectionCard = ({ section, courseId }: any) => {
+const SectionCard = ({ section }: any) => {
   const [openModal, setOpenModal] = useState(false);
+
+  // onSave handle karne ke liye function
+  const handleSave = async (data: any) => {
+    console.log("Lecture Data:", data);
+    setOpenModal(false);
+  };
 
   return (
     <div className="bg-richblack-700 p-4 rounded-lg">
       <div className="flex justify-between items-center">
-        <h3 className="font-semibold">{section.sectionName}</h3>
+        <h3 className="font-semibold text-white">{section.sectionName}</h3>
       </div>
 
-      {/* Lectures */}
+      {/* Lectures List */}
       <div className="ml-4 mt-3 space-y-2">
-        {section.subSection.map((lec: any) => (
+        {section.subSection?.map((lec: any) => (
           <p key={lec._id} className="text-sm text-richblack-200">
             ▶ {lec.title}
           </p>
@@ -21,15 +28,16 @@ const SectionCard = ({ section, courseId }: any) => {
 
       <button
         onClick={() => setOpenModal(true)}
-        className="text-yellow-400 mt-3"
+        className="text-yellow-400 mt-3 hover:text-yellow-300 transition-colors"
       >
         + Add Lecture
       </button>
 
+      {/* Modal ko uncomment kiya aur sahi props pass kiye */}
       {openModal && (
-        <AddLectureModal
-          sectionId={section._id}
-          close={() => setOpenModal(false)}
+        <LectureModal
+          onClose={() => setOpenModal(false)}
+          onSave={handleSave}
         />
       )}
     </div>

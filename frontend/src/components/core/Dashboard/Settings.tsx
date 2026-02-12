@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FiUpload, FiChevronLeft, FiLock, FiTrash2 } from "react-icons/fi"; 
 import { updateDisplayPicture, updateProfile, deleteProfile } from "../../../services/operations/SetingsAPI";
-import ConfirmationModal from "../../common/ConfirmationModal"; // ✅ Modal import kiya
+import ConfirmationModal from "../../common/ConfirmationModal"; 
 
 const Settings = () => {
   const { user } = useSelector((state: any) => state.profile);
@@ -64,7 +64,7 @@ const Settings = () => {
 
   // ✅ Account Delete Handler
   const handleDeleteAccount = () => {
-    dispatch(deleteProfile(token, navigate));
+    dispatch(deleteProfile(token));
   };
 
   if (!user) return <div className="flex h-[50vh] items-center justify-center text-white">Loading...</div>;

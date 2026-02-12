@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Hero from "../components/core/Homepage/Hero";
 import Features from "../components/core/Homepage/Features";
 import CodeBlocks from "../components/core/Homepage/CodeBook";
@@ -14,7 +14,7 @@ import { useGetAllReviewsQuery } from "../services/authApi";
 const HomePage = () => {
   const [token, setToken] = useState<string | null>(null);
 
-  const { data: reviewsData, isLoading } = useGetAllReviewsQuery();
+  const { data: reviewsData, isLoading } = useGetAllReviewsQuery(undefined);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -95,7 +95,7 @@ const HomePage = () => {
 
       <TestimonialSlider
         data={reviewsData?.data || []}
-        loading={isLoading}
+        heading={isLoading}
         
       />
     </>

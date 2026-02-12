@@ -16,7 +16,7 @@ export const authApi = createApi({
 },
   }),
   // "CourseProgress" tag add kiya hai auto-refresh ke liye
-  tagTypes: ["Courses", "Categories", "CourseProgress"],
+  tagTypes: ["Courses", "Categories", "CourseProgress","AdminUsers"],
 
   endpoints: (builder) => ({
     // ===== AUTH =====

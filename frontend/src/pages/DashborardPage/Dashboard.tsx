@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
   // --- LOGOUT FUNCTION (Same as Navbar) ---
   const handleLogout = () => {
     // 1. Redux Store clear karo
-    dispatch(setToken(null));
+    dispatch(setToken(""));
 
     // 2. LocalStorage saaf karo
     localStorage.clear();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   GripVertical,
   ChevronDown,
@@ -21,6 +21,7 @@ import {
   deleteSubSection,
 } from "../../services/operations/courseAPI";
 import { toast } from "react-hot-toast";
+
 import LectureModal from "../../components/core/Dashboard/LectureModal";
 
 const CourseBuilder = () => {
@@ -107,12 +108,12 @@ const CourseBuilder = () => {
     setLoading(false);
   };
 
-  // ================= DELETE LECTURE =================
   const handleDeleteLecture = async (
     sectionId: string,
-    subSectionId: string
+    subSectionId: string,
   ) => {
     if (!courseId) return;
+
     setLoading(true);
     try {
       const res = await deleteSubSection({
@@ -120,35 +121,56 @@ const CourseBuilder = () => {
         subSectionId,
         courseId,
       });
-      setSections(res.data.courseContent);
-      toast.success("Lecture deleted");
-    } catch {
+
+      // CHECK: Agar response sahi hai tabhi state update karo
+      if (res?.data?.courseContent) {
+        setSections(res.data.courseContent);
+        toast.success("Lecture deleted");
+      } else {
+        // Agar backend se poora data nahi aa raha, toh manual filter lagao (Temporary Fix)
+        setSections((prev) =>
+          prev.map((section) =>
+            section._id === sectionId
+              ? {
+                  ...section,
+                  subSection: section.subSection.filter(
+                    (s: any) => s._id !== subSectionId,
+                  ),
+                }
+              : section,
+          ),
+        );
+        toast.success("Lecture removed from view");
+      }
+    } catch (error) {
+      console.error("Delete Error:", error);
       toast.error("Delete failed");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // Validation logic for Next Step
-const goToNext = () => {
-  if (sections.length === 0) {
-    toast.error("Please add at least one section");
-    return;
-  }
+  const goToNext = () => {
+    if (sections.length === 0) {
+      toast.error("Please add at least one section");
+      return;
+    }
 
-  // Check if every section has at least one sub-section
-  const allSectionsHaveLectures = sections.every(
-    (section) => section.subSection && section.subSection.length > 0
-  );
+    // Check if every section has at least one sub-section
+    const allSectionsHaveLectures = sections.every(
+      (section) => section.subSection && section.subSection.length > 0,
+    );
 
-  if (!allSectionsHaveLectures) {
-    toast.error("Each section must have at least one lecture");
-    return;
-  }
+    if (!allSectionsHaveLectures) {
+      toast.error("Each section must have at least one lecture");
+      return;
+    }
 
-  // If everything is fine
-  toast.success("Course structure completed!");
-  navigate(`/dashboard/my-courses`); // Ya jo bhi aapka next route ho
-};
+    // If everything is fine
+    toast.success("Course structure completed!");
+    navigate(`/dashboard/my-courses`); // Ya jo bhi aapka next route ho
+  };
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-6">
@@ -233,14 +255,15 @@ const goToNext = () => {
 
                   <Trash2
                     size={14}
-                    className="cursor-pointer hover:text-red-500"
-                    onClick={() =>
-                      handleDeleteLecture(section._id, lec._id)
-                    }
+                    className="cursor-pointer hover:text-red-500 transition-all"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation(); // Isse page crash/refresh nahi hoga
+                      handleDeleteLecture(section._id, lec._id);
+                    }}
                   />
                 </div>
               ))}
-
               <button
                 onClick={() => {
                   setActiveSectionId(section._id);
@@ -257,19 +280,24 @@ const goToNext = () => {
 
       {/* FOOTER */}
       {/* FOOTER */}
-<div className="mt-10 flex justify-end gap-4 border-t border-white/5 pt-6">
-  <button className="text-gray-500 font-bold" onClick={() => navigate(-1)}>Back</button>
-  <button
-    onClick={goToNext} // <--- Call the validation function here
-    className="bg-white text-black px-6 py-2 rounded-lg font-black hover:bg-cyan-400 transition-all active:scale-95"
-  >
-    Next Step
-  </button>
-</div>
+      <div className="mt-10 flex justify-end gap-4 border-t border-white/5 pt-6">
+        <button
+          className="text-gray-500 font-bold"
+          onClick={() => navigate(-1)}
+        >
+          Back
+        </button>
+        <button
+          onClick={goToNext} // <--- Call the validation function here
+          className="bg-white text-black px-6 py-2 rounded-lg font-black hover:bg-cyan-400 transition-all active:scale-95"
+        >
+          Next Step
+        </button>
+      </div>
 
       {showModal && (
         <LectureModal
-          courseId={courseId!}
+          // courseId={courseId!}
           onClose={() => setShowModal(false)}
           onSave={handleSaveLecture}
         />

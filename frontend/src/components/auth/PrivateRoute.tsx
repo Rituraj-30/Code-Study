@@ -1,22 +1,19 @@
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom"; // Navigation ke liye
-import type { ReactNode } from "react";
-import { RootState } from "../../redux/store";
-import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useEffect, type ReactNode } from "react"; 
+import type { RootState } from "../../redux/store"; 
 
 interface Props {
   children: ReactNode;
 }
 
-const PrivateRoute: React.FC<Props> = ({ children }) => {
+const PrivateRoute = ({ children }: Props) => {
+  // TypeScript ko batana padega ki token string ya null hai
   const token = useSelector((state: RootState) => state.auth.token) || localStorage.getItem("token");
-  
-  // console.log("private routes -> ", token);
 
-  // console.log("children ->", children)
   useEffect(() => {
     if (!token) {
-      // toast.error("Please login to access this course");
+      // console.log("User not authenticated");
     }
   }, [token]);
 

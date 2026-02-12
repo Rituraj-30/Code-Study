@@ -3,9 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import HighlightText from "../../common/HighlightText";
 
-// declare module 'swiper/css';
-// declare module 'swiper/css/pagination';
-// declare module 'swiper/css/navigation';
 
 import 'swiper/css/bundle';
 

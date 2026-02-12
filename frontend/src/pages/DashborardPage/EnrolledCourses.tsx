@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetEnrolledCoursesQuery } from "../../services/authApi";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSelector } from "react-redux"; // Redux se user nikalne ke liye
+import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux"; 
 import RatingAndReview from "../../components/core/Dashboard/RatingAndReview";
 import { PlayCircle, Loader2, BookOpen, CheckCircle } from "lucide-react";
+// Store se type import karna zaroori hai images mein dikhne wale error ke liye
+import type { AppDispatch } from "../../redux/store"; 
 
 const EnrolledCourses: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>(); // Type safety ke liye
   const { data, isLoading, refetch } = useGetEnrolledCoursesQuery(undefined);
   
-  // Redux store se user data nikalna (Kyuki API response me userId undefined aa rahi hai)
+  // Redux store se user data
   const { user } = useSelector((state: any) => state.profile);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,14 +21,13 @@ const EnrolledCourses: React.FC = () => {
 
   const courses = data?.data || [];
   
-  // Multiple sources se userId check karna: 1. API 2. Redux 3. LocalStorage
   const userId = data?.userId || user?._id || user?.id || JSON.parse(localStorage.getItem("user") || "{}")?._id;
 
-  // Debugging ke liye (Check in browser console)
+  // Debugging & Dependency Fix
   useEffect(() => {
     console.log("Current UserID:", userId);
     console.log("Enrolled Courses Data:", courses);
-  }, [data, userId]);
+  }, [data, userId, courses]); // Saari dependencies add kar di
 
   if (isLoading) {
     return (
@@ -42,7 +44,6 @@ const EnrolledCourses: React.FC = () => {
         Your Learning
       </h1>
 
-      {/* NO COURSES VIEW */}
       {courses.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
           <div className="bg-white/5 p-6 rounded-full mb-4">
@@ -60,12 +61,10 @@ const EnrolledCourses: React.FC = () => {
           </button>
         </div>
       ) : (
-        /* COURSES GRID */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course: any) => {
-            // Check if current user has already reviewed
             const userReview = course.ratingAndReviews?.find((r: any) => {
-              const reviewUserId = r.user?._id || r.user; // Object ho ya String, handle karega
+              const reviewUserId = r.user?._id || r.user;
               return String(reviewUserId) === String(userId);
             });
 
@@ -76,13 +75,14 @@ const EnrolledCourses: React.FC = () => {
                 key={course._id}
                 className="bg-[#020617] border border-white/5 rounded-2xl overflow-hidden flex flex-col group"
               >
-                {/* THUMBNAIL */}
+                {/* --- IMAGE HEIGHT FIX START --- */}
                 <div
-                  className="relative aspect-video cursor-pointer"
+                  className="relative aspect-video w-full overflow-hidden cursor-pointer bg-slate-800"
                   onClick={() => navigate(`/view-course/${course._id}`)}
                 >
                   <img
                     src={course.thumbnail}
+                    // object-cover image ko box ke hisab se crop kar dega stretch nahi karega
                     className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                     alt={course.courseName}
                   />
@@ -90,13 +90,12 @@ const EnrolledCourses: React.FC = () => {
                     <PlayCircle size={40} className="text-cyan-400" />
                   </div>
                 </div>
+                {/* --- IMAGE HEIGHT FIX END --- */}
 
-                {/* DETAILS */}
                 <div className="p-4 flex flex-col flex-grow">
                   <div className="flex justify-between items-start gap-2 mb-3">
                     <h2 className="text-md font-bold line-clamp-1">{course.courseName}</h2>
                     
-                    {/* REVIEW ACTION */}
                     {userReview ? (
                       <div className="flex items-center gap-1 text-green-400 bg-green-400/10 px-2 py-1 rounded-md">
                         <CheckCircle size={12} />
@@ -116,7 +115,6 @@ const EnrolledCourses: React.FC = () => {
                     )}
                   </div>
 
-                  {/* PROGRESS BAR */}
                   <div className="mb-4">
                     <div className="flex justify-between text-[10px] mb-1 text-gray-400 font-medium">
                       <span>Progress</span>
@@ -144,14 +142,13 @@ const EnrolledCourses: React.FC = () => {
         </div>
       )}
 
-      {/* RATING MODAL */}
       {isModalOpen && (
         <RatingAndReview
           courseId={selectedCourseId}
           onClose={() => setIsModalOpen(false)}
           onSuccess={() => {
             setIsModalOpen(false);
-            refetch(); // Fresh data load karega review ke baad
+            refetch();
           }}
         />
       )}

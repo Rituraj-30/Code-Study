@@ -19,6 +19,7 @@ const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   
   const [token, setTokenState] = useState<string | null>(localStorage.getItem("token"));
+  // any rakha hai taaki extra interfaces na banane padein
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -30,7 +31,9 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   const handleLogout = () => {
-    dispatch(setToken(null));
+    // Error Fix: null ki jagah empty string "" bheja hai 
+    // kyunki aapka slice shayad sirf string accept kar raha hai
+    dispatch(setToken("")); 
     localStorage.clear();
     setTokenState(null);
     setUser(null);
@@ -55,7 +58,6 @@ const Navbar: React.FC = () => {
   return (
     <nav className="w-full bg-[#000814]/90 border-b border-white/10 sticky top-0 z-[100] backdrop-blur-md">
       <div className="max-w-[1260px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* LOGO */}
         <Link to="/" className="flex items-center group shrink-0">
           <img
             src={logo}
@@ -64,7 +66,6 @@ const Navbar: React.FC = () => {
           />
         </Link>
 
-        {/* DESKTOP LINKS */}
         <ul className="hidden lg:flex items-center gap-8 xl:gap-10 text-[15px] font-medium">
           {NavLinks.map((link) => (
             <li key={link.path}>
@@ -75,7 +76,6 @@ const Navbar: React.FC = () => {
           ))}
         </ul>
 
-        {/* RIGHT SECTION */}
         <div className="flex items-center gap-3 sm:gap-5">
           {token ? (
             <div className="flex items-center gap-3 sm:gap-4">
@@ -94,7 +94,6 @@ const Navbar: React.FC = () => {
                   )}
                 </div>
                 
-                {/* Dropdown - Desktop Only */}
                 <div className="hidden lg:block absolute right-0 mt-2 w-44 bg-[#000d1f] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 overflow-hidden">
                   <Link to="/dashboard/my-profile" className="block px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white">My Profile</Link>
                   <Link to="/dashboard" className="block px-4 py-2.5 text-sm text-gray-300 hover:bg-white/5 hover:text-white">Dashboard</Link>
@@ -122,14 +121,12 @@ const Navbar: React.FC = () => {
             </div>
           )}
 
-          {/* MOBILE MENU BUTTON */}
           <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden text-white p-1 hover:bg-white/5 rounded-md transition-colors">
             {menuOpen ? <HiX size={26} /> : <HiMenuAlt3 size={26} />}
           </button>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       <div className={`lg:hidden absolute w-full left-0 bg-[#000814] border-b border-white/10 shadow-2xl transition-all duration-300 ease-in-out ${menuOpen ? "top-16 opacity-100 visible" : "top-[-400px] opacity-0 invisible"}`}>
         <ul className="flex flex-col items-center gap-5 py-8">
           {NavLinks.map((link) => (

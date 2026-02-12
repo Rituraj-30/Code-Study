@@ -144,7 +144,7 @@ const CourseDetails: React.FC = () => {
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
       
-      rzp.on("payment.failed", function (response: any) {
+      rzp.on("payment.failed", function () {
         toast.error("Payment Failed! Please try again.");
       });
 

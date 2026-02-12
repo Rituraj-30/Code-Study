@@ -5,7 +5,7 @@ import { profileEndpoints } from "../apis";
 
 const { GET_USER_DETAILS_API } = profileEndpoints;
 
-export function getUserDetails(token: string, navigate: any) {
+export function getUserDetails(token: string) {
   return async (dispatch: any) => {
     dispatch(setLoading(true));
     try {

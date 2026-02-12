@@ -56,7 +56,6 @@ export const adminApi = authApi.injectEndpoints({
   overrideExisting: false,
 });
 
-// Hooks export kar rahe hain
 export const {
   useCreateCategoryMutation,
   useDeleteCategoryMutation,

@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 interface RatingProps {
   courseId: string;
   onClose: () => void;
+  onSuccess?: () => void; 
 }
 
 const RatingAndReview: React.FC<RatingProps> = ({ courseId, onClose }) => {

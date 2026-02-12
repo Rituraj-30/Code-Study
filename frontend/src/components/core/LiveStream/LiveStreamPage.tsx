@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AgoraRTC from "agora-rtc-sdk-ng";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { 
@@ -16,7 +16,7 @@ const LiveStreamPage = () => {
     const { roomId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-      const [userCount, setUserCount] = useState(1);
+      const [userCount] = useState(1);
     
     const { token, appId, role } = location.state || {};
 

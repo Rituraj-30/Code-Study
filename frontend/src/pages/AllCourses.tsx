@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useGetAllCategoriesQuery } from '../services/authApi';
-import { Search, IndianRupee, Star, Loader2, BookOpen, ArrowRight, Users } from 'lucide-react'; // 1. Users icon add kiya
+import { Search, IndianRupee, Loader2, BookOpen, ArrowRight, Users } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import type { RootState } from '../redux/store';
 import { toast } from 'react-hot-toast';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
@@ -79,15 +79,24 @@ const Courses: React.FC = () => {
         {filteredCategories.length > 0 ? (
           filteredCategories.map((category: any) => (
             <div key={category._id} className="space-y-6">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-4">
-                  <div className="h-8 w-1 bg-cyan-500 rounded-full"></div>
-                  <div>
-                    <h2 className="text-xl md:text-2xl font-bold uppercase tracking-widest">{category.name}</h2>
-                    <p className="text-[10px] md:text-xs text-gray-500 mt-0.5">{category.description}</p>
+              
+              {/* CATEGORY HEADER FIX */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-4 gap-4">
+                <div className="flex items-center gap-4 min-w-0"> {/* min-w-0 overflow handle karne ke liye */}
+                  <div className="h-8 w-1 bg-cyan-500 rounded-full shrink-0"></div>
+                  <div className="min-w-0">
+                    <h2 className="text-xl md:text-2xl font-bold uppercase tracking-widest truncate">
+                      {category.name}
+                    </h2>
+                    {/* DESCRIPTION FIX: line-clamp aur max-width control */}
+                    <p className="text-[10px] md:text-xs text-gray-500 mt-0.5 line-clamp-1 max-w-[180px] sm:max-w-[350px] md:max-w-[600px]">
+                      {category.description}
+                    </p>
                   </div>
                 </div>
-                <button className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 transition-all text-xs md:text-sm font-bold tracking-tighter">
+                
+                {/* VIEW ALL BUTTON FIX: shrink-0 se ye button kabhi nahi dabega */}
+                <button className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 transition-all text-xs md:text-sm font-bold tracking-tighter shrink-0">
                   <HighlightText text={" VIEW ALL"}/> <ArrowRight size={14} />
                 </button>
               </div>
@@ -121,15 +130,12 @@ const Courses: React.FC = () => {
                             {course.price}
                           </div>
                           
-                          {/* 2. Rating ki jagah Student Count wala UI */}
                           <div className="flex items-center gap-1.5 text-gray-400 bg-white/5 px-2 py-1 rounded-lg">
-                            <Users size={14} className="text-cyan-400" />
+                            <include Users size={14} className="text-cyan-400" />
                             <span className="text-xs font-bold text-gray-300">
-                               {/* Backend field ke according change karein (e.g. course.studentsEnrolled.length) */}
                               {course.studentsEnrolled?.length || 0} Students
                             </span>
                           </div>
-
                         </div>
                       </div>
                     </div>

@@ -1,32 +1,55 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Edit3, Mail, User as UserIcon, Phone, Calendar, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { getUserDetails } from "../../../services/operations/profileAPI";
+import type { AppDispatch, RootState } from "../../../redux/store"; 
+
+interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  image?: string;
+  accountType: string;
+  createdAt?: string;
+  additionalDetails?: {
+    about?: string;
+    contactNumber?: string;
+    gender?: string;
+    dateOfBirth?: string;
+  };
+}
 
 const MyProfile = () => {
-  const { user, loading } = useSelector((state: any) => state.profile);
-  const { token } = useSelector((state: any) => state.auth);
-  const dispatch = useDispatch();
+const { user, loading } = useSelector((state: RootState) => state.profile) as { user: User | null, loading: boolean };  const { token } = useSelector((state: RootState) => state.auth);
+  
   const navigate = useNavigate();
+  
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     if (token) {
-      // @ts-ignore
-      dispatch(getUserDetails(token, navigate));
+      dispatch(getUserDetails(token));
     }
-  }, []);
+    // 4. Warning hatane ke liye dependencies add kar di hain
+  }, [dispatch, token, navigate]);
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
   };
+  
 
-  if (loading) return <div className="flex h-[60vh] items-center justify-center"><div className="w-8 h-8 border-2 border-t-cyan-500 rounded-full animate-spin"></div></div>;
+  if (loading) {
+    return (
+      <div className="flex h-[60vh] items-center justify-center">
+        <div className="w-8 h-8 border-2 border-t-cyan-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
-    
     <div className="mx-auto w-full max-w-[1000px] space-y-6 px-6 pb-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
       
       {/* Header */}
@@ -79,7 +102,7 @@ const MyProfile = () => {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-500 text-xs">Joined</span>
-              <span className="text-gray-200 text-xs font-medium">{formatDate(user?.createdAt)}</span>
+              <span className="text-gray-200 text-xs font-medium">{formatDate(user?.createdAt || "")}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-500 text-xs">Verification</span>
@@ -91,7 +114,7 @@ const MyProfile = () => {
           </div>
         </div>
 
-        {/* Info Rows */}
+        {/* Contact Info */}
         <div className="rounded-2xl border border-white/5 bg-[#001428] p-6">
             <h3 className="mb-5 text-[10px] font-black uppercase tracking-widest text-gray-500">Contact</h3>
             <div className="space-y-5">
@@ -112,6 +135,7 @@ const MyProfile = () => {
             </div>
         </div>
 
+        {/* Personal Details */}
         <div className="rounded-2xl border border-white/5 bg-[#001428] p-6">
             <h3 className="mb-5 text-[10px] font-black uppercase tracking-widest text-gray-500">Personal Details</h3>
             <div className="space-y-5">
