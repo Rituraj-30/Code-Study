@@ -1,0 +1,84 @@
+/* AddCourse.css */
+
+.add-course-container {
+  background-color: #000814;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px; /* py-2 equivalent */
+  min-height: 100vh;
+}
+
+.add-course-wrapper {
+  width: 100%;
+  max-width: 42rem; /* max-w-2xl */
+}
+
+/* Stepper Styles */
+.stepper-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px; /* mb-2 */
+}
+
+/* Card Styles */
+.course-card {
+  background-color: rgba(2, 6, 23, 0.8);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* Common Input/Textarea/Select Styles */
+.input-sm {
+  width: 100%;
+  height: 38px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #e5e7eb;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-sm:focus {
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.4);
+}
+
+.label-sm {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 3px;
+  color: #94a3b8;
+}
+
+/* Textarea specific */
+textarea.input-sm {
+  height: 60px; 
+  min-height: 50px;
+  padding: 6px 12px;
+  resize: none;
+}
+
+/* Select specific */
+select.input-sm {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%239ca3af' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+}
+
+select.input-sm option {
+  background-color: #020617;
+  color: #e5e7eb;
+}

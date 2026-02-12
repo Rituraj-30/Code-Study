@@ -1,0 +1,55 @@
+
+/* 
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination'; */
+
+.swiper {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #0891b2 !important;
+  background: white;
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(0.7);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+  z-index: 20; /* Taaki box ke upar clean dikhe */
+}
+
+/* Button ko thoda sa slide se bahar nikalne ke liye */
+.swiper-button-next {
+  right: -10px !important;
+}
+.swiper-button-prev {
+  left: -10px !important;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: #0891b2;
+  color: white !important;
+  transform: scale(0.8);
+}
+
+/* Navigation arrow ki size choti karne ke liye */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 18px !important;
+  font-weight: bold;
+}
+
+.swiper-pagination-bullet-active {
+  background: #0891b2 !important;
+}
+
+/* Pagination dots ko cards se thoda niche karne ke liye */
+.swiper-pagination {
+  bottom: 0px !important;
+}
