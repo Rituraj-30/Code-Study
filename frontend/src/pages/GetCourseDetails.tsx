@@ -148,6 +148,9 @@ const CourseDetails: React.FC = () => {
         toast.error("Payment Failed! Please try again.");
       });
 
+
+      
+
     } catch (error: any) {
       toast.dismiss(toastId);
       toast.error(error?.response?.data?.message || "Order creation failed");
