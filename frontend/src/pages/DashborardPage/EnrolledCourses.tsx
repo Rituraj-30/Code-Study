@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetEnrolledCoursesQuery } from "../../services/authApi";
 import { motion } from "framer-motion";
-import { useSelector, useDispatch } from "react-redux"; 
+import { useSelector } from "react-redux"; 
 import RatingAndReview from "../../components/core/Dashboard/RatingAndReview";
 import { PlayCircle, Loader2, BookOpen, CheckCircle } from "lucide-react";
 // Store se type import karna zaroori hai images mein dikhne wale error ke liye
-import type { AppDispatch } from "../../redux/store"; 
+// import type { AppDispatch } from "../../redux/store"; 
 
 const EnrolledCourses: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>(); // Type safety ke liye
+  // const dispatch = useDispatch<AppDispatch>(); 
   const { data, isLoading, refetch } = useGetEnrolledCoursesQuery(undefined);
   
   // Redux store se user data

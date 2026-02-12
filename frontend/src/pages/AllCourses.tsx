@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useGetAllCategoriesQuery } from '../services/authApi';
-import { Search, IndianRupee, Loader2, BookOpen, ArrowRight, Users } from 'lucide-react';
+import { Search, IndianRupee, Loader2, BookOpen, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../redux/store';
@@ -131,7 +131,7 @@ const Courses: React.FC = () => {
                           </div>
                           
                           <div className="flex items-center gap-1.5 text-gray-400 bg-white/5 px-2 py-1 rounded-lg">
-                            <include Users size={14} className="text-cyan-400" />
+                            {/* <include  size={14} className="text-cyan-400" /> */}
                             <span className="text-xs font-bold text-gray-300">
                               {course.studentsEnrolled?.length || 0} Students
                             </span>
