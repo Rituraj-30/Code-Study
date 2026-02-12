@@ -12,7 +12,10 @@ import authRoutes from "./routes/user.Route";
 import adminRoutes from "./routes/admin.Route";
 import courseRoutes from "./routes/course.Route";
 import paymentRoutes from "./routes/payment.Routes";
+
 import LiveClass from "./routes/liveClass.routes"
+
+
 dotenv.config();
 
 const app: Application = express();
