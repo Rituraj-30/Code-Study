@@ -2,7 +2,7 @@
 import { v2 as cloudinary } from "cloudinary";
 
 interface UploadOptions {
-  resource_type?: "image" | "video" | "auto";
+  resource_type?: "image" | "video" | "raw" | "auto";
   folder?: string; 
 }
 
