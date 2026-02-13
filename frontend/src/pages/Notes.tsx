@@ -40,7 +40,8 @@ const NotesPage: React.FC = () => {
     const fetchNotes = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/auth/getAllNotes"
+         "https://code-study-backend.onrender.com/api/v1/auth/getAllNotes"
+          
         );
         setSections(data.data);
         setAllNotes(data.allData);
