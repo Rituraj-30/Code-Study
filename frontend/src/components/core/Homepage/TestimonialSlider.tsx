@@ -23,9 +23,9 @@ interface Props {
 }
 
 const TestimonialSlider: React.FC<Props> = ({ data = [], heading = true }) => {
-  // ✅ Filter out reviews where user data is missing (Account deleted case)
-  const validData = data.filter((item) => item && item.user);
-  const duplicatedTestimonials = [...validData, ...validData];
+const validData = data.filter((item) => {
+    return item !== null; 
+});  const duplicatedTestimonials = [...validData, ...validData];
 
   if (!validData.length) return null;
 
