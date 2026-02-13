@@ -20,15 +20,18 @@ export const uploadToCloudinary = async (
   try {
     const path = file.tempFilePath || file;
 
-    
-    const finalFolder = options.folder 
-      ? `${process.env.FOLDER_NAME}/${options.folder}` 
-      : process.env.FOLDER_NAME;
+    // Extension check karo
+    const isPDF = file.name?.toLowerCase().endsWith('.pdf') || path.toLowerCase().endsWith('.pdf');
 
-    const result = await cloudinary.uploader.upload(path, {
-      folder: finalFolder, 
-      resource_type: options.resource_type || "auto",
-    });
+    const finalOptions: any = {
+      folder: options.folder 
+        ? `${process.env.FOLDER_NAME}/${options.folder}` 
+        : process.env.FOLDER_NAME,
+      // FORCE PDF to RAW: Agar PDF hai toh 'raw' hi jayega
+      resource_type: isPDF ? "raw" : (options.resource_type || "auto"),
+    };
+
+    const result = await cloudinary.uploader.upload(path, finalOptions);
 
     return {
       success: true,
@@ -41,8 +44,6 @@ export const uploadToCloudinary = async (
     throw new Error("Failed to upload file to Cloudinary");
   }
 };
-
-
 export const deleteResourceFromCloudinary = async (
   fileUrl: string,
   resourceType: "image" | "video" = "image" 
