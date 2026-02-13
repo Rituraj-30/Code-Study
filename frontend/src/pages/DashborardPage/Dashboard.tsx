@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
     sidebarLinks.push(
       { id: 2, name: "Enrolled Courses", path: "/dashboard/enrolled-courses", icon: BookOpen },
       { id: 3, name: "Live Class", path: "/dashboard/live-class", icon: Video },
-      { id: 4, name: "Wishlist", path: " ", icon: ShoppingCart }
+      { id: 4, name: "Wishlist", path: "#", icon: ShoppingCart }
     );
   }
 
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
     sidebarLinks.push(
       { id: 5, name: "My Courses", path: "/dashboard/my-courses", icon: GraduationCap },
       { id: 6, name: "Add Course", path: "/dashboard/add-course", icon: PlusCircle },
-      { id: 7, name: "Dashboard Stats", path: "/dashboard/instructor-stats", icon: LayoutDashboard }
+      { id: 7, name: "Dashboard Stats", path: "#", icon: LayoutDashboard }
     );
   }
 
