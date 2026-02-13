@@ -25,7 +25,8 @@ interface Props {
 const TestimonialSlider: React.FC<Props> = ({ data = [], heading = true }) => {
 const validData = data.filter((item) => {
     return item !== null; 
-});  const duplicatedTestimonials = [...validData, ...validData];
+});  
+  const duplicatedTestimonials = [...validData, ...validData];
 
   if (!validData.length) return null;
 
