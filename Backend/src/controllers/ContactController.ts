@@ -42,12 +42,13 @@ export const contactUsController = async (req: Request, res: Response) => {
     });
 
     try {
-      const emailBody = contactUsEmail(name);
-      await mailSender(
-        email,
-        "Message Received - CodeStudy",
-        emailBody
-      );
+
+        const emailBody = contactUsEmail(name);
+        await mailSender({
+          to:email,
+          subject:"Message Received - CodeStudy",
+          html: emailBody
+        });
     } catch (mailError) {
       console.error("Email sending failed:", mailError);
     }

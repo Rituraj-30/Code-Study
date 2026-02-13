@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import mailSender from "../utils/mailSender";
 import { liveClassNotificationEmail } from "../utils/mail/liveClassNotificationEmail";
 
+
 const generateAgoraToken = (channelName: string, role: number) => {
   const appId = process.env.AGORA_APP_ID || "";
   const appCertificate = process.env.AGORA_APP_CERTIFICATE || "";
@@ -32,7 +33,8 @@ export const startLiveClass = async (req: Request, res: Response) => {
     const { courseId, title, roomId, roomPassword } = req.body;
     const instructorId = req.user?.id;
 
-    const course =await CourseModel.findById(courseId).populate("studentsEnrolled");
+    const course =
+      await CourseModel.findById(courseId).populate("studentsEnrolled");
 
     if (!course) {
       return res
@@ -46,7 +48,7 @@ export const startLiveClass = async (req: Request, res: Response) => {
         .json({ success: false, message: "Unauthorized access" });
     }
 
-    //  agr pele se live  he ya nhi 
+    //  agr pele se live  he ya nhi
     const activeSession = await LiveClassModel.findOne({
       course: courseId,
       isLive: true,
@@ -78,17 +80,17 @@ export const startLiveClass = async (req: Request, res: Response) => {
 
     if (enrolledStudents && enrolledStudents.length > 0) {
       const emailPromises = enrolledStudents.map((student: any) => {
-        return mailSender(
-          student.email,
-          `🔴 LIVE NOW: ${title}`,
-          liveClassNotificationEmail({
-            courseName: course.courseName||" Your Enroll Course",
+        return mailSender({
+          to: student.email,
+          subject: `🔴 LIVE NOW: ${title}`,
+          html: liveClassNotificationEmail({
+            courseName: course.courseName || " Your Enroll Course",
             name: student.firstName || "Student",
             title: title,
             roomId: roomId,
             roomPassword: roomPassword,
           }),
-        );
+        });
       });
 
       Promise.all(emailPromises)
@@ -147,9 +149,8 @@ export const joinLiveClass = async (req: Request, res: Response) => {
       RtcRole.SUBSCRIBER,
     );
 
-    
     await LiveClassModel.findByIdAndUpdate(liveSession._id, {
-      $addToSet: { joinedStudents: studentId }, 
+      $addToSet: { joinedStudents: studentId },
     });
 
     res.status(200).json({

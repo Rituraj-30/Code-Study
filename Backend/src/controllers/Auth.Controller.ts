@@ -10,7 +10,6 @@ import { otpEmailTemplate } from "../utils/mail/OTPemail";
 import { passwordUpdated } from "../utils/mail/UpdatePassword";
 
 
-
  export interface RegisterBody {
   firstName: string;
   lastName: string;
@@ -187,12 +186,11 @@ export const sendOTP = async (
     const name = email.split('@')[0].split('.').map(part => part.replace(/\d+/g, '')).join(' ');
     // console.log(name);
 
-    // Send email
-    await mailSender(
-      email,
-      "OTP Verification",
-      otpEmailTemplate({ name, otp })
-    );
+     await mailSender({
+    to:email,
+    subject: "OTP Verification",
+    html: otpEmailTemplate({ name, otp })
+  });
 
     return res.status(200).json({
       success: true,
@@ -380,9 +378,13 @@ export const updatePassword = async (
     userDoc.password = hashedNewPassword;
     await userDoc.save();
 
-    await mailSender(userDoc.email,"Your password has been updated",passwordUpdated(  userDoc.email, `${userDoc.firstName} ${userDoc.lastName}`
-      )
-    );
+
+
+    await mailSender({
+    to: userDoc.email,
+    subject: "Your password has been updated",
+    html: passwordUpdated(  userDoc.email, `${userDoc.firstName} ${userDoc.lastName}` )
+  });
 
     return res.status(200).json({
       success: true,
@@ -397,3 +399,18 @@ export const updatePassword = async (
     });
   }
 };
+
+
+
+
+export const testMail = async (  req: Request,
+  res: Response) => {
+  await mailSender({
+    to: "rutu2930@gmail.com",
+    subject: "Your password has been updated",
+    html: passwordUpdated(  "rutu2930@gmail.com", `${"Rituraj "} ${"Singh"}` )
+  });
+
+  res.json({ success: true, message: "Email sent" });
+};
+

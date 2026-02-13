@@ -164,14 +164,16 @@ const enrollStudents = async (courses: string[], userId: string) => {
 
     if (!enrolledStudent) continue;
 
-    await mailSender(
-  enrolledStudent.email!,
-  `Successfully Enrolled in ${enrolledCourse.courseName ?? "Your Course"}`,
-  courseEnrollmentEmail({
+
+
+     await mailSender({
+    to:  enrolledStudent.email!,
+    subject:  `Successfully Enrolled in ${enrolledCourse.courseName ?? "Your Course"}`,
+    html: courseEnrollmentEmail({
     courseName: enrolledCourse.courseName ?? "Your Course",
     name: enrolledStudent.firstName ?? "Student",
   })
-);
+  });
 
   }
 };
@@ -198,16 +200,17 @@ export const sendPaymentSuccessEmail = async (
         .json({ success: false, message: "User not found" });
     }
 
-    await mailSender(
-      user.email,
-      "Payment Successful 🎉",
-      paymentSuccessEmail({
+    
+     await mailSender({
+    to:   user.email,
+    subject:  "Payment Successful 🎉",
+    html:  paymentSuccessEmail({
         name: user.firstName ?? "Student",
         amount,
         orderId,
         paymentId,
       })
-    );
+  });
 
     return res.status(200).json({
       success: true,
