@@ -93,9 +93,9 @@ const HomePage = () => {
         />
       )}
 
-      <TestimonialSlider
+       <TestimonialSlider
         data={reviewsData?.data || []}
-        heading={isLoading}
+        heading={true}
         
       />
     </>
