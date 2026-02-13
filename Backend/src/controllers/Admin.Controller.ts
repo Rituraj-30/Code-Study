@@ -147,12 +147,12 @@ export const  deleteCategory = async (
         const thumbnailFile = files?.thumbnail; 
         const pdf = files?.pdfFile;
     
-        console.log("title -> ", title)      
-        console.log("description -> ", description)      
-        console.log("category -> ", category)      
-        console.log("language -> ", language)      
-        console.log("thumbnail -> ", thumbnailFile)      
-        console.log("pdfFile -> ", pdf)      
+        // console.log("title -> ", title)      
+        // console.log("description -> ", description)      
+        // console.log("category -> ", category)      
+        // console.log("language -> ", language)      
+        // console.log("thumbnail -> ", thumbnailFile)      
+        // console.log("pdfFile -> ", pdf)      
     
         if (!title || !category || !language || !thumbnailFile || !pdf) {
           return res.status(400).json({
@@ -161,8 +161,10 @@ export const  deleteCategory = async (
           });
         }
     
-        const uploadedImage = await uploadToCloudinary(thumbnailFile, { folder: "Notes" });
-    
+const uploadedImage = await uploadToCloudinary(thumbnailFile, { 
+  folder: "Notes", 
+  resource_type: "raw" 
+});    
     
     const uploadedPdf = await uploadToCloudinary(pdf, { folder: "Notes" });
         if (!uploadedImage || !uploadedPdf) {
