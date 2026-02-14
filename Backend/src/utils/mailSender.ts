@@ -21,6 +21,7 @@ const mailSender = async (
   },
   tls: {
     rejectUnauthorized: false, 
+    minVersion: "TLSv1.2"
   }
 });
 
