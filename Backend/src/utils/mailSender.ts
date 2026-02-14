@@ -11,17 +11,19 @@ const mailSender = async (
   body: string
 ): Promise<MailSenderResponse | undefined> => {
   try {
-       const transporter = nodemailer.createTransport({
+      const transporter: Transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,            
-      secure: true,        
+      secure: true, 
       auth: {
         user: process.env.MAIL_USER, 
         pass: process.env.MAIL_PASS, 
       },
-      connectionTimeout: 30000,
-      greetingTimeout: 30000,
-      socketTimeout: 30000,
+    
+      connectionTimeout: 60000,
+      greetingTimeout: 60000,
+      socketTimeout: 60000,
+      pool: true, 
     });
 
 
