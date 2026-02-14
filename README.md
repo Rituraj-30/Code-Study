@@ -31,7 +31,7 @@
 - **Backend:** Node.js, Express.js, TypeScript
 - **Database:** MongoDB (Mongoose ODM)
 - **Authentication:** JWT (JSON Web Tokens) & OTP Verification
-- **Email Service:** Brevo SMTP (Transactional Emails)
+- **Email Service:** SendGrid (Transactional Emails)
 - **Media Hosting:** Cloudinary
 - **Deployment:** Vercel (Frontend), Render (Backend)
 
