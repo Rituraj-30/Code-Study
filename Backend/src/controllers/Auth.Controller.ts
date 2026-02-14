@@ -404,14 +404,14 @@ export const updatePassword = async (
 
 
 
-export const testMail = async (  req: Request,
-  res: Response) => {
-  await mailSender({
-    to: "rutu2930@gmail.com",
-    subject: "Your password has been updated",
-    html: passwordUpdated(  "rutu2930@gmail.com", `${"Rituraj "} ${"Singh"}` )
-  });
+// export const testMail = async (  req: Request,
+//   res: Response) => {
+//   await mailSender({
+//     to: "rutu2930@gmail.com",
+//     subject: "Your password has been updated",
+//     html: passwordUpdated(  "rutu2930@gmail.com", `${"Rituraj "} ${"Singh"}` )
+//   });
 
-  res.json({ success: true, message: "Email sent" });
-};
+//   res.json({ success: true, message: "Email sent" });
+// };
 
