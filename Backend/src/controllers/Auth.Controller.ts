@@ -186,11 +186,11 @@ export const sendOTP = async (
     const name = email.split('@')[0].split('.').map(part => part.replace(/\d+/g, '')).join(' ');
     // console.log(name);
 
-    const mail= await mailSender({
-    to:email,
-    subject: "OTP Verification",
-    html: otpEmailTemplate({ name, otp })
-  });
+    const mail = await mailSender(
+  email,                       
+  "OTP Verification",         
+  otpEmailTemplate({ name, otp })
+);
    console.log("mail ->",mail)
 
     return res.status(200).json({
