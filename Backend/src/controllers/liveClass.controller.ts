@@ -80,17 +80,17 @@ export const startLiveClass = async (req: Request, res: Response) => {
 
     if (enrolledStudents && enrolledStudents.length > 0) {
       const emailPromises = enrolledStudents.map((student: any) => {
-        return mailSender({
-          to: student.email,
-          subject: `🔴 LIVE NOW: ${title}`,
-          html: liveClassNotificationEmail({
-            courseName: course.courseName || " Your Enroll Course",
-            name: student.firstName || "Student",
-            title: title,
-            roomId: roomId,
-            roomPassword: roomPassword,
-          }),
-        });
+        return mailSender(
+      student.email,                         
+      `🔴 LIVE NOW: ${title}`,               
+      liveClassNotificationEmail({           
+        courseName: course.courseName || " Your Enroll Course",
+        name: student.firstName || "Student",
+        title: title,
+        roomId: roomId,
+        roomPassword: roomPassword,
+      })
+    );
       });
 
       Promise.all(emailPromises)
