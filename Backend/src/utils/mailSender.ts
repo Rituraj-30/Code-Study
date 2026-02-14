@@ -11,21 +11,18 @@ const mailSender = async (
   body: string
 ): Promise<MailSenderResponse | undefined> => {
   try {
-      const transporter: Transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,            
-      secure: true, 
-      auth: {
-        user: process.env.MAIL_USER, 
-        pass: process.env.MAIL_PASS, 
-      },
-    
-      connectionTimeout: 60000,
-      greetingTimeout: 60000,
-      socketTimeout: 60000,
-      pool: true, 
-    });
-
+     const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // Port 587 ke liye false
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS, // Saare spaces apne aap hat jayenge
+  },
+  tls: {
+    rejectUnauthorized: false, // Security check bypass for Render
+  }
+});
 
     const info = await transporter.sendMail({
       from: `"CodeStudy" <${process.env.MAIL_USER}>`,
