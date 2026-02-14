@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-    console.log(process.env.RAZORPAY_KEY)
+
 
 export const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY as string,
