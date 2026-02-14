@@ -12,15 +12,15 @@ const mailSender = async (
 ): Promise<MailSenderResponse | undefined> => {
   try {
      const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
-  secure: false, // Port 587 ke liye false
+  secure: false, 
   auth: {
     user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS, // Saare spaces apne aap hat jayenge
+    pass: process.env.MAIL_PASS,
   },
   tls: {
-    rejectUnauthorized: false, // Security check bypass for Render
+    rejectUnauthorized: false, 
   }
 });
 
