@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://code-study-roan.vercel.app/", 
+    origin: "https://code-study-roan.vercel.app", 
     credentials: true,
   })
 );
