@@ -1,36 +1,5 @@
 
 
-// import { Resend } from "resend";
-
-
-// const resend = new Resend(process.env.RESEND_API_KEY!);
-
-// interface SendMailProps {
-//   to: string;
-//   subject: string;
-//   html: string;
-// }
-
-// const mailSender = async ({ to, subject, html }: SendMailProps) => {
-//   try {
-//     const response = await resend.emails.send({
-//       from: process.env.MAIL_FROM!,
-//       to,
-//       subject,
-//       html,
-//     });
-
-//     return response;
-//   } catch (error) {
-//     console.error("❌ Email send error:", error);
-//     throw error;
-//   }
-// };
-
-// export default mailSender;
-
-
-
 
 import nodemailer, { Transporter, SentMessageInfo } from "nodemailer";
 
@@ -72,3 +41,36 @@ const mailSender = async (
 };
 
 export default mailSender;
+
+
+
+// import { Resend } from "resend";
+
+
+// const resend = new Resend(process.env.RESEND_API_KEY!);
+
+// interface SendMailProps {
+//   to: string;
+//   subject: string;
+//   html: string;
+// }
+
+// const mailSender = async ({ to, subject, html }: SendMailProps) => {
+//   try {
+//     const response = await resend.emails.send({
+//       from: process.env.MAIL_FROM!,
+//       to,
+//       subject,
+//       html,
+//     });
+
+//     return response;
+//   } catch (error) {
+//     console.error("❌ Email send error:", error);
+//     throw error;
+//   }
+// };
+
+// export default mailSender;
+
+
