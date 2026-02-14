@@ -48,8 +48,13 @@ const Dashboard: React.FC = () => {
       { id: 7, name: "Dashboard Stats", path: "#", icon: LayoutDashboard }
     );
   }
+  if (user?.accountType === "Admin") {
+    sidebarLinks.push(
+      { id: 8, name: "Admin", path: "/admin-panel", icon: Settings }
+    );
+  }
 
-  sidebarLinks.push({ id: 8, name: "Settings", path: "/dashboard/settings", icon: Settings });
+  sidebarLinks.push({ id: 9, name: "Settings", path: "/dashboard/settings", icon: Settings });
 
   return (
     <div className="relative flex min-h-[calc(100vh-3.5rem)] bg-[#000814]">
