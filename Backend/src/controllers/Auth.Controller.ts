@@ -381,11 +381,11 @@ export const updatePassword = async (
 
 
 
-    await mailSender({
-    to: userDoc.email,
-    subject: "Your password has been updated",
-    html: passwordUpdated(  userDoc.email, `${userDoc.firstName} ${userDoc.lastName}` )
-  });
+   await mailSender(
+  userDoc.email,                                           // 1. Email (to)
+  "Your password has been updated",                        // 2. Subject
+  passwordUpdated(userDoc.email, `${userDoc.firstName} ${userDoc.lastName}`) // 3. HTML Body
+);
 
     return res.status(200).json({
       success: true,
