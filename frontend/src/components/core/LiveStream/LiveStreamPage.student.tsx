@@ -39,12 +39,15 @@ const LiveStreamStudentPage = () => {
             setIsLive(true);
             setStatus("LIVE");
             setTimeout(() => {
-              user.videoTrack?.play("student-video-inner", { fit: "contain" });
+              user.videoTrack?.play("student-video-inner", { fit: "contain", 
+  mirror: false });
             }, 300);
           }
           if (mediaType === "audio") user.audioTrack?.play();
         });
 
+
+        
         client.on("user-left", async () => {
           setIsLive(false);
           setStatus("Ended");
