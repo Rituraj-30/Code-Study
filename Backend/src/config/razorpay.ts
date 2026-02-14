@@ -5,6 +5,7 @@ dotenv.config();
 
 
 export const instance = new Razorpay({
+    console.log(pocess.env.RAZORPAY_KEY)
     key_id: process.env.RAZORPAY_KEY as string,
     key_secret: process.env.RAZORPAY_SECRET as string,
 });
