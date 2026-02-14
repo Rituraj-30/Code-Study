@@ -114,6 +114,7 @@ const LiveStreamStudentPage = () => {
         
         <div
           id="student-video-inner"
+          style={{ transform: 'scaleX(1)' }}
           className={`relative w-full h-full max-w-6xl aspect-video bg-black rounded-[2rem] shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] border border-white/5 overflow-hidden z-10 transition-all duration-1000 ${
             isLive ? "scale-100 opacity-100 ring-1 ring-white/10" : "scale-95 opacity-0"
           }`}
