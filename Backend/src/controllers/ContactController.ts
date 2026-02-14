@@ -44,11 +44,11 @@ export const contactUsController = async (req: Request, res: Response) => {
     try {
 
         const emailBody = contactUsEmail(name);
-        await mailSender({
-          to:email,
-          subject:"Message Received - CodeStudy",
-          html: emailBody
-        });
+       await mailSender(
+  email,                        
+  "Message Received - CodeStudy",
+  emailBody                 
+);
     } catch (mailError) {
       console.error("Email sending failed:", mailError);
     }
