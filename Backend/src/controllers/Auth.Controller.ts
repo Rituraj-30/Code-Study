@@ -170,7 +170,7 @@ export const sendOTP = async (
       specialChars: false,
     });
 
-    // console.log("Generated OTP:", otp);
+    console.log("Generated OTP:", otp);
     
     // Delete old OTPs
     await OTP.deleteMany({ email });
@@ -186,11 +186,12 @@ export const sendOTP = async (
     const name = email.split('@')[0].split('.').map(part => part.replace(/\d+/g, '')).join(' ');
     // console.log(name);
 
-     await mailSender({
+    const mail= await mailSender({
     to:email,
     subject: "OTP Verification",
     html: otpEmailTemplate({ name, otp })
   });
+   console.log("mail ->",mail)
 
     return res.status(200).json({
       success: true,
