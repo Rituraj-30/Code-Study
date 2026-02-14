@@ -166,14 +166,14 @@ const enrollStudents = async (courses: string[], userId: string) => {
 
 
 
-     await mailSender({
-    to:  enrolledStudent.email!,
-    subject:  `Successfully Enrolled in ${enrolledCourse.courseName ?? "Your Course"}`,
-    html: courseEnrollmentEmail({
-    courseName: enrolledCourse.courseName ?? "Your Course",
-    name: enrolledStudent.firstName ?? "Student",
-  })
-  });
+    await mailSender(
+      enrolledStudent.email!, 
+      `Successfully Enrolled in ${enrolledCourse.courseName ?? "Your Course"}`, 
+      courseEnrollmentEmail({
+        courseName: enrolledCourse.courseName ?? "Your Course",
+        name: enrolledStudent.firstName ?? "Student",
+      })
+    );
 
   }
 };
@@ -201,16 +201,16 @@ export const sendPaymentSuccessEmail = async (
     }
 
     
-     await mailSender({
-    to:   user.email,
-    subject:  "Payment Successful 🎉",
-    html:  paymentSuccessEmail({
+    await mailSender(
+      user.email,
+      "Payment Successful 🎉",
+      paymentSuccessEmail({
         name: user.firstName ?? "Student",
         amount,
         orderId,
         paymentId,
       })
-  });
+    );
 
     return res.status(200).json({
       success: true,
