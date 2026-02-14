@@ -191,7 +191,7 @@ export const sendOTP = async (
   "OTP Verification",         
   otpEmailTemplate({ name, otp })
 );
-   console.log("mail ->",mail)
+   // console.log("mail ->",mail)
 
     return res.status(200).json({
       success: true,
