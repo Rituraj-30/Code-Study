@@ -14,7 +14,7 @@ import { useGetAllReviewsQuery } from "../services/authApi";
 const HomePage = () => {
   const [token, setToken] = useState<string | null>(null);
 
-  const { data: reviewsData, isLoading } = useGetAllReviewsQuery(undefined);
+  const { data: reviewsData } = useGetAllReviewsQuery(undefined);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
