@@ -4,12 +4,19 @@ import { useLoginMutation } from "../../services/authApi";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../redux/slices/authSlice";
 import { toast } from "react-hot-toast";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Copy, X } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+
+// Demo accounts shown when the user clicks "Get Demo"
+const demoAccounts = [
+  { role: "Instructor", email: "instructor@gmail.com", password: "instructor@gmail.com" },
+  { role: "Student", email: "Student@gmail.com", password: "Student@gmail.com" },
+];
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [showDemo, setShowDemo] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,6 +36,11 @@ const Login: React.FC = () => {
     } catch (err: any) {
       toast.error(err.data?.message || "Invalid Credentials");
     }
+  };
+
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast.success("Copied!");
   };
 
   return (
@@ -108,8 +120,84 @@ const Login: React.FC = () => {
             <FcGoogle size={20} />
             Continue with Google
           </button>
+
+          {/* Get Demo button */}
+          <button
+            type="button"
+            onClick={() => setShowDemo(true)}
+            className="w-full h-11 mt-3 flex items-center justify-center rounded-lg border border-cyan-400/40 bg-cyan-500/10 text-cyan-300 text-sm font-medium hover:bg-cyan-500/20 hover:border-cyan-400 transition"
+          >
+            Get Demo
+          </button>
         </div>
       </div>
+
+      {/* Demo credentials popup */}
+      {showDemo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setShowDemo(false)}
+          />
+          <div className="relative w-full max-w-[400px] rounded-2xl bg-[#020b1f] border border-white/10 shadow-[0_0_40px_rgba(34,211,238,0.15)] p-6">
+            <div className="flex items-start justify-between mb-1">
+              <h3 className="text-xl font-bold text-white">Demo accounts</h3>
+              <button
+                type="button"
+                onClick={() => setShowDemo(false)}
+                className="text-gray-400 hover:text-white transition"
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <p className="text-xs text-gray-400 mb-5">
+              Copy an email and password, then log in to explore the app.
+            </p>
+
+            <div className="space-y-4">
+              {demoAccounts.map((acc) => (
+                <div
+                  key={acc.role}
+                  className="rounded-xl border border-white/10 bg-[#020617] p-4"
+                >
+                  <p className="text-sm font-semibold text-cyan-400 mb-3">{acc.role}</p>
+
+                  <div className="flex items-center justify-between gap-2 text-sm mb-2">
+                    <span className="text-gray-400">Email</span>
+                    <button
+                      type="button"
+                      onClick={() => copyText(acc.email)}
+                      className="flex items-center gap-1.5 text-white hover:text-cyan-300 transition break-all text-right"
+                    >
+                      {acc.email} <Copy size={13} className="shrink-0" />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-2 text-sm">
+                    <span className="text-gray-400">Password</span>
+                    <button
+                      type="button"
+                      onClick={() => copyText(acc.password)}
+                      className="flex items-center gap-1.5 text-white hover:text-cyan-300 transition break-all text-right"
+                    >
+                      {acc.password} <Copy size={13} className="shrink-0" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowDemo(false)}
+              className="w-full h-11 mt-5 rounded-lg bg-cyan-500 text-black font-semibold hover:shadow-[0_0_20px_rgba(34,211,238,0.45)] active:scale-[0.98] transition"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
